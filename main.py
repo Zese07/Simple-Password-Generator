@@ -13,7 +13,7 @@ generate = False
 password = ""
 
 layout = [[sg.Text('Input the length of the password:', font=('', 10, 'bold')),
-           sg.Input(key='LENGTH', size=(10, 1), justification='center')],
+           sg.Input(key='LENGTH', size=(10, 1), justification='center'), sg.Button('Generate', size=(10, 1), bind_return_key=True)],
     [sg.Radio('Letters', 'TOP', default=True, key='LETTERS'),
      sg.Radio('Numbers', 'TOP', key='NUMBERS'),
      sg.Radio('Symbols', 'TOP', key='SYMBOLS'),
@@ -21,14 +21,13 @@ layout = [[sg.Text('Input the length of the password:', font=('', 10, 'bold')),
     [sg.Radio('Both Upper/Lower', 'BOT', default=True, key='BOTHUPPERLOWER'),
      sg.Radio('Only Upper', 'BOT', key='ONLYUPPER'),
      sg.Radio('Only Lower', 'BOT', key='ONLYLOWER')],
-    [sg.Button('Generate', bind_return_key=True)],
     [sg.Text('Strength:', font=('', 10, 'bold')), sg.Text('NONE', key='STRENGTH', font=('', 10, 'bold'))],
     [sg.Text('Password:', font=('', 10, 'bold')),
      sg.Input(key="PASSWORD", size=(30, 1), justification='center'),
      sg.Button('Copy', size=(5, 1), bind_return_key=True),
      sg.Button('Check', size=(5, 1), bind_return_key=True)]]
 
-window = sg.Window('Simple Password Generator', layout, size=(450, 200), element_justification='c', finalize=True)
+window = sg.Window('Simple Password Generator', layout, size=(450, 160), element_justification='c', finalize=True)
 window.set_icon('icon.ico')
 
 
@@ -143,8 +142,10 @@ while True:
             else:
                 pass
 
+            check_password(password)
             generate = False
             password = ""
+
         else:
             pass
 
