@@ -13,16 +13,20 @@ password = ""
 
 layout = [[sg.Text('Input the length of the password:'),
            sg.Input(key='LENGTH', size=(10, 1), justification='center')],
-    [sg.Radio('Letters', 'RADIO1', default=True, key='LETTERS'),
-     sg.Radio('Numbers', 'RADIO1', key='NUMBERS'),
-     sg.Radio('Symbols', 'RADIO1', key='SYMBOLS'),
-     sg.Radio('Combination', 'RADIO1', key='COMBINATION')],
-    [sg.Button('Generate', size=(10, 1), bind_return_key=True)],
+    [sg.Radio('Letters', 'TOP', default=True, key='LETTERS'),
+     sg.Radio('Numbers', 'TOP', key='NUMBERS'),
+     sg.Radio('Symbols', 'TOP', key='SYMBOLS'),
+     sg.Radio('Combination', 'TOP', key='COMBINATION')],
+    [sg.Radio('Both Upper/Lower', 'BOT', default=True, key='BOTHUPPERLOWER'),
+     sg.Radio('Only Upper', 'BOT', key='ONLYUPPER'),
+     sg.Radio('Only Lower', 'BOT', key='ONLYLOWER')],
+    [sg.Button('Generate', bind_return_key=True)],
     [sg.Text('Password:'),
-     sg.Input(key="PASSWORD", size=(20, 1)),
+     sg.Input(key="PASSWORD", size=(30, 1)),
      sg.Button('Copy', size=(5, 1), bind_return_key=True)]]
 
-window = sg.Window('Password Generator', layout, size=(400, 125), element_justification='c', finalize=True)
+window = sg.Window('Simple Password Generator', layout, size=(400, 160), element_justification='c', finalize=True)
+window.set_icon('icon.ico')
 
 while True:
     event, values = window.read()
@@ -31,19 +35,19 @@ while True:
     elif event == 'Generate':
         length = values['LENGTH']
         if length == '':
-            sg.popup('There is no input to generate.', title='X')
+            sg.popup('There is no input to generate.', title='X', icon='icon.ico')
         elif length.isdigit():
             length = int(length)
             if length <= 6:
-                sg.popup('The input should be minimum of 7.', title='X')
-            elif length >= 21:
-                sg.popup('The input maximum is 20.', title='X')
-            elif length in range(7, 21):
+                sg.popup('The input should be minimum of 7.', title='X', icon='icon.ico')
+            elif length >= 26:
+                sg.popup('The input maximum is 25.', title='X', icon='icon.ico')
+            elif length in range(7, 26):
                 generate = True
             else:
                 pass
         else:
-            sg.popup('The input is not an integer.', title='X')
+            sg.popup('The input is not an integer.', title='X', icon='icon.ico')
         if generate:
             for i in range(0, length):
                 randomize = random.randint(0, 51)
@@ -68,7 +72,15 @@ while True:
                 else:
                     pass
 
-            window['PASSWORD'].update(password)
+            if values['BOTHUPPERLOWER']:
+                window['PASSWORD'].update(password)
+            elif values['ONLYUPPER']:
+                window['PASSWORD'].update(password.upper())
+            elif values['ONLYLOWER']:
+                window['PASSWORD'].update(password.lower())
+            else:
+                pass
+
             generate = False
             password = ""
         else:
@@ -76,10 +88,10 @@ while True:
 
     elif event == 'Copy':
         if values['PASSWORD'] == '':
-            sg.popup('There is no password to copy.', title='X')
+            sg.popup('There is no password to copy.', title='X', icon='icon.ico')
         else:
             sg.clipboard_set(values['PASSWORD'])
-            sg.popup('Successfully copied to clipboard.', title='/')
+            sg.popup('Successfully copied to clipboard.', title='/', icon='icon.ico')
 
 
 window.close()
