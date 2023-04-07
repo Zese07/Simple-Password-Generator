@@ -1,2 +1,2 @@
 # Simple-Password-Generator
-A simple password generator.
+A simple password generator created in PySimpleGUI.
