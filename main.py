@@ -23,9 +23,8 @@ layout = [[sg.Text('Input the length of the password:', font=('', 10, 'bold')),
      sg.Radio('Only Lower', 'BOT', key='ONLYLOWER')],
     [sg.Text('Strength:', font=('', 10, 'bold')), sg.Text('NONE', key='STRENGTH', font=('', 10, 'bold'))],
     [sg.Text('Password:', font=('', 10, 'bold')),
-     sg.Input(key="PASSWORD", size=(30, 1), justification='center'),
-     sg.Button('Copy', size=(5, 1), bind_return_key=True),
-     sg.Button('Check', size=(5, 1), bind_return_key=True)]]
+     sg.Input(key="PASSWORD", size=(35, 1), justification='center', enable_events=True),
+     sg.Button('Copy', size=(5, 1), bind_return_key=True)]]
 
 window = sg.Window('Simple Password Generator', layout, size=(450, 160), element_justification='c', finalize=True)
 window.set_icon('icon.ico')
@@ -156,11 +155,11 @@ while True:
             sg.clipboard_set(values['PASSWORD'])
             sg.popup('Successfully copied to clipboard.', title='/', icon='icon.ico')
 
-    elif event == 'Check':
-        if values['PASSWORD'] == '':
-            sg.popup('There is no password to check.', title='X', icon='icon.ico')
-        else:
+    elif event == 'PASSWORD':
+        if not values['PASSWORD'] == '':
             check_password(values['PASSWORD'])
+        else:
+            pass
 
 
 window.close()
